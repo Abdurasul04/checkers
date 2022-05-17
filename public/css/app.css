@@ -1,0 +1,42 @@
+body {
+  background-color: aliceblue;
+}
+
+#desk {
+  background: wheat;
+  border: 10px solid silver;
+  border-radius: 5px;
+  display: grid;
+  grid-auto-rows: minmax(50px, auto);
+  grid-template-rows: repeat(8, 1fr);
+}
+@media screen and (min-width: 800px) {
+  #desk {
+    width: 500px;
+    height: 500px;
+  }
+}
+@media screen and (max-width: 799px) {
+  #desk {
+    width: 300px;
+    height: 300px;
+  }
+}
+#desk .rows {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+#desk .black {
+  background-color: black;
+}
+#desk .black .item {
+  margin-top: 15%;
+  margin-left: 15%;
+  width: 70%;
+  height: 70%;
+  background-color: rgb(124, 72, 72);
+  border-radius: 50%;
+}
+#desk .white {
+  background-color: white;
+}
