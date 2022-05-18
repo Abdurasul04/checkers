@@ -15,9 +15,14 @@
                    @php
                        (($j+$i)%2 == 0) ? $color = "black" : $color = "white";
                    @endphp
-                    <div onmouseover="mover({{ $j }},{{ $i }})" onmouseout="mout({{ $j }}, {{ $i }})" class="cage {{ $color }}" id="place-{{ $j . "-" .$i }}">
+                    <div 
+                    onmouseover="mover({{ $j }},{{ $i }})" 
+                    onmouseout="mout({{ $j }}, {{ $i }})" 
+                    class="cage {{ $color }}" id="place-{{ $j . "-" .$i }}"
+                    onclick="itemSelect({{ $j }},{{ $i }})"
+                    ondblclick="moveItem({{ $j }}, {{ $i }})">
                         @if (($j < 4 || $j > 5) && $color == "black")
-                            <div onclick="itemSelect({{ $j }},{{ $i }})" class="item">
+                            <div class="item" id="item-{{ $j . "-" .$i }}">
                             </div>
                         @endif
                     </div>
@@ -28,15 +33,18 @@
     <script>
         var j, i;
         function itemSelect(j, i) {
-            console.log("it works!", j, i);
-            for (let r = 1; r < 9; r++) {
-                for (let c = 1; c < 9; c++) {
-                    if(document.getElementById("place-" + r + "-" + c).style.background === "rgb(22, 94, 78)"){
-                        document.getElementById("place-" + r + "-" + c).style.background = "black"
+            if (document.getElementById("item-" + j + "-" + i) != null) {
+                console.log("it works!", j, i);
+                for (let r = 1; r < 9; r++) {
+                    for (let c = 1; c < 9; c++) {
+                        if(document.getElementById("place-" + r + "-" + c).style.background === "rgb(22, 94, 78)"){
+                            document.getElementById("place-" + r + "-" + c).style.background = "black"
+                        }
                     }
                 }
+                document.getElementById("place-"+ j + "-" + i).style.background = "rgb(22, 94, 78)"
             }
-            document.getElementById("place-"+ j + "-" + i).style.background = "rgb(22, 94, 78)"
+
         }
 
         function mover(j, i) {
@@ -47,6 +55,24 @@
         function mout(j, i) {
             if ((j+i)%2===0 && document.getElementById("place-"+j+"-"+i).style.background !== "rgb(22, 94, 78)") {
                 document.getElementById("place-"+j+"-"+i).style.background = "black"
+            }
+        }
+
+        function moveItem(j, i) {
+            if ((j+i) % 2 === 0) {
+                for (let r = 1; r < 9; r++) {
+                    for (let c = 1; c < 9; c++) {
+                        if(document.getElementById("place-" + r + "-" + c).style.background === "rgb(22, 94, 78)"
+                            && document.getElementById("item-" + j + "-" + i) == null
+                            && (j < r && (c + 1 === i || c - 1 === i)) )
+                        {
+                            document.getElementById("place-" + r + "-" + c).style.background = "black"
+                            document.getElementById("item-" + r + "-" + c).remove()
+                            document.getElementById("place-" + j + "-" + i).innerHTML = 
+                            "<div class=\"item\" id=\"item-" + j + "-" + i + "\"></div>"
+                        }
+                    }
+                }
             }
         }
     </script>
