@@ -64,7 +64,13 @@
                     for (let c = 1; c < 9; c++) {
                         if(document.getElementById("place-" + r + "-" + c).style.background === "rgb(22, 94, 78)"
                             && document.getElementById("item-" + j + "-" + i) == null
-                            && ((r + 1 === j || r - 1 === j) && (c + 1 === i || c - 1 === i)) )
+                            && (
+                                ((document.getElementById("item-" + r + "-" + c).classList[1] == 'mine') &&
+                                (r - 1 === j) && (c + 1 === i || c - 1 === i)) ||
+                                ((document.getElementById("item-" + r + "-" + c).classList[1] == 'enemy') &&
+                                (r + 1 === j) && (c + 1 === i || c - 1 === i))
+                            )
+                        )
                         {
                             document.getElementById("place-" + j + "-" + i).innerHTML = 
                                 "<div class=\"item\" id=\"item-" + j + "-" + i + "\"></div>"
