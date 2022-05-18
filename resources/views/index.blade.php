@@ -22,7 +22,7 @@
                     onclick="itemSelect({{ $j }},{{ $i }})"
                     ondblclick="moveItem({{ $j }}, {{ $i }})">
                         @if (($j < 4 || $j > 5) && $color == "black")
-                            <div class="item" id="item-{{ $j . "-" .$i }}">
+                            <div class="item @if ($j < 4) enemy @else mine @endif" id="item-{{ $j . "-" .$i }}">
                             </div>
                         @endif
                     </div>
@@ -64,12 +64,19 @@
                     for (let c = 1; c < 9; c++) {
                         if(document.getElementById("place-" + r + "-" + c).style.background === "rgb(22, 94, 78)"
                             && document.getElementById("item-" + j + "-" + i) == null
-                            && (j < r && (c + 1 === i || c - 1 === i)) )
+                            && ((r + 1 === j || r - 1 === j) && (c + 1 === i || c - 1 === i)) )
                         {
+                            document.getElementById("place-" + j + "-" + i).innerHTML = 
+                                "<div class=\"item\" id=\"item-" + j + "-" + i + "\"></div>"
+                                
+                            if (document.getElementById("item-" + r + "-" + c).classList[1] == 'mine') {
+                                document.getElementById("item-" + j + "-" + i).classList.add('mine')
+                            }else {
+                                document.getElementById("item-" + j + "-" + i).classList.add('enemy')
+                            }
                             document.getElementById("place-" + r + "-" + c).style.background = "black"
                             document.getElementById("item-" + r + "-" + c).remove()
-                            document.getElementById("place-" + j + "-" + i).innerHTML = 
-                            "<div class=\"item\" id=\"item-" + j + "-" + i + "\"></div>"
+                            
                         }
                     }
                 }

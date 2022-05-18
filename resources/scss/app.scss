@@ -34,12 +34,18 @@ body {
             margin-left: 15%;
             width: 70%;
             height: 70%;
-            background-color: rgb(52, 99, 146);
             border-radius: 50%;
+        }
+        .enemy {
+        background-color: rgb(176, 67, 105);
+        }
+        .mine {
+            background-color: rgb(52, 99, 146);
         }
     }
     .white {
         background-color: white;
     }
+    
     
 }
