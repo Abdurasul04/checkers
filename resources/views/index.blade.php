@@ -59,9 +59,9 @@
         }
 
         function moveItem(j, i) {
-            if ((j+i) % 2 === 0) {
-                for (let r = 1; r < 9; r++) {
-                    for (let c = 1; c < 9; c++) {
+            if ((j+i) % 2 === 0) { //Двигатся монут только в черных зонах
+                for (let r = 1; r < 9; r++) { //Перебираем ряды
+                    for (let c = 1; c < 9; c++) { //перебираем колонны
                         if(document.getElementById("place-" + r + "-" + c).style.background === "rgb(22, 94, 78)"
                             && document.getElementById("item-" + j + "-" + i) == null
                             && (
@@ -80,12 +80,69 @@
                             }else {
                                 document.getElementById("item-" + j + "-" + i).classList.add('enemy')
                             }
+
+                            if (document.getElementById("place-" + r + "-" + c).style.pointerEvents == 'none') {
+                                document.getElementById("place-" + r + "-" + c).style.pointerEvents = 'auto'
+                            }
                             document.getElementById("place-" + r + "-" + c).style.background = "black"
                             document.getElementById("item-" + r + "-" + c).remove()
-                            
+                            queue()
+                        }
+                        else if(document.getElementById("place-" + r + "-" + c).style.background === "rgb(22, 94, 78)"
+                            && document.getElementById("item-" + j + "-" + i) == null
+                            && (
+                                ((document.getElementById("item-" + r + "-" + c).classList[1] == 'mine') &&
+                                    (r - 2 === j) && (c + 2 === i || c - 2 === i) &&
+                                    (
+                                        document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)) != null &&
+                                        document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)).classList[1] == 'enemy'
+                                    )
+                                )
+                                ||
+                                ((document.getElementById("item-" + r + "-" + c).classList[1] == 'enemy') &&
+                                (r + 2 === j) && (c + 2 === i || c - 2 === i) &&
+                                    (
+                                        document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)) != null &&
+                                        document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)).classList[1] == 'mine'
+                                    )
+                                )
+                            )
+                        )
+                        {
+                            document.getElementById("place-" + j + "-" + i).innerHTML = 
+                                "<div class=\"item\" id=\"item-" + j + "-" + i + "\"></div>"
+                                
+                            if (document.getElementById("item-" + r + "-" + c).classList[1] == 'mine') {
+                                document.getElementById("item-" + j + "-" + i).classList.add('mine')
+                            }else {
+                                document.getElementById("item-" + j + "-" + i).classList.add('enemy')
+                            }
+                            document.getElementById("place-" + r + "-" + c).style.background = "black"
+
+                            if (document.getElementById("place-" + r + "-" + c).style.pointerEvents == 'none') {
+                                document.getElementById("place-" + r + "-" + c).style.pointerEvents = 'auto'
+                            }
+                            if (document.getElementById("place-" + ((j+r)/2) + "-" + ((i+c)/2)).style.pointerEvents == 'none') {
+                                document.getElementById("place-" + ((j+r)/2) + "-" + ((i+c)/2)).style.pointerEvents = 'auto'
+                            }
+                            document.getElementById("item-" + r + "-" + c).remove()
+                            document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)).remove()
+                            queue()
                         }
                     }
                 }
+            }
+        }
+
+        var q = "mine"
+        function queue() {
+            console.log("disabling");
+            for (let el of document.querySelectorAll("."+q)) {
+                el.parentElement.style.pointerEvents = 'none'
+            }
+            (q == 'mine') ? q = 'enemy' : q = 'mine'
+            for (let el of document.querySelectorAll("."+q)) {
+                el.parentElement.style.pointerEvents = 'auto'
             }
         }
     </script>
