@@ -92,7 +92,7 @@
                             && document.getElementById("item-" + j + "-" + i) == null
                             && (
                                 ((document.getElementById("item-" + r + "-" + c).classList[1] == 'mine') &&
-                                    (r - 2 === j) && (c + 2 === i || c - 2 === i) &&
+                                    (r - 2 === j || r + 2 === j) && (c + 2 === i || c - 2 === i) &&
                                     (
                                         document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)) != null &&
                                         document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)).classList[1] == 'enemy'
@@ -100,7 +100,7 @@
                                 )
                                 ||
                                 ((document.getElementById("item-" + r + "-" + c).classList[1] == 'enemy') &&
-                                (r + 2 === j) && (c + 2 === i || c - 2 === i) &&
+                                (r + 2 === j || r - 2 === j) && (c + 2 === i || c - 2 === i) &&
                                     (
                                         document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)) != null &&
                                         document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)).classList[1] == 'mine'
