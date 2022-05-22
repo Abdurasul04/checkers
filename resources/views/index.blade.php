@@ -30,6 +30,13 @@
             </div>
         @endfor
     </div>
+    <div id="desk_score">
+        <div id="score_enemy">0</div>
+        <div id="score_mine">0</div>
+    </div>
+    <div id="menu">
+        <div id="play_bot" onclick="step()">Play with bot</div>
+    </div>
     <script>
         var j, i;
         function itemSelect(j, i) {
@@ -125,8 +132,12 @@
                             if (document.getElementById("place-" + ((j+r)/2) + "-" + ((i+c)/2)).style.pointerEvents == 'none') {
                                 document.getElementById("place-" + ((j+r)/2) + "-" + ((i+c)/2)).style.pointerEvents = 'auto'
                             }
+
                             document.getElementById("item-" + r + "-" + c).remove()
                             document.getElementById("item-" + ((j+r)/2) + "-" + ((i+c)/2)).remove()
+
+                            document.getElementById('score_mine').innerHTML = (12 - document.querySelectorAll('.enemy').length);
+                            document.getElementById('score_enemy').innerHTML = (12 - document.querySelectorAll('.mine').length);
                             queue()
                         }
                     }
@@ -144,6 +155,10 @@
             for (let el of document.querySelectorAll("."+q)) {
                 el.parentElement.style.pointerEvents = 'auto'
             }
+        }
+
+        function step() {
+            //
         }
     </script>
 </body>
