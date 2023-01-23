@@ -105,9 +105,7 @@ window.moveItem = function (j, i) {
           cutItem(r, c);
           cutItem((j + r) / 2, (i + c) / 2);
           scoreUpdate();
-          if (checkIfPlayerCanTakeAFigurine(j + 2, i + 2, j, i)) return;else if (checkIfPlayerCanTakeAFigurine(j - 2, i - 2, j, i)) return;else if (checkIfPlayerCanTakeAFigurine(j + 2, i - 2, j, i)) return;else if (checkIfPlayerCanTakeAFigurine(j - 2, i + 2, j, i)) return;else {
-            queue();
-          }
+          queue();
         }
       }
     }
